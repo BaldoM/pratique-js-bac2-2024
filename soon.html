@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;900&display=swap" rel="stylesheet">
+
+    <style>
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            font-size: 18px;
+            font-weight: 500;
+            background-color: whitesmoke;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+        }
+
+        .container div {
+            margin: 3px ;
+            padding: 5px;
+            width: 6rem;
+            border-top: 6px solid blueviolet;
+            background-color: rgba(10, 100, 28, .3);
+        }
+
+        .container div h2 {
+            font-family: 'Raleway', sans-serif;
+            font-weight: 900;
+            margin: 0;
+            padding: 0;
+            font-size: 55px;
+            text-align: center;
+        }
+
+        .container div h4 {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .date-show {
+            text-align: center;
+            font-weight: 900;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+<div class="date-show">
+    Ce Mini Coming Soon jusqu'au <span></span>
+</div>
+<div class="container" data-count="2024/7/22">
+    <div>
+        <h2>%J</h2>
+        <h4>Jours</h4>
+    </div>
+    <div>
+        <h2>%H</h2>
+        <h4>Heures</h4>
+    </div>
+    <div>
+        <h2>%M</h2>
+        <h4>Minutes</h4>
+    </div>
+    <div>
+        <h2>%S</h2>
+        <h4>Secondes</h4>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        let container = document.querySelector('.container');
+        const replacement = container.innerHTML;
+        const data_count = container.getAttribute('data-count');
+        document.querySelector('.date-show span').innerHTML = new Date(data_count).toLocaleDateString("fr");
+
+        const counter = function () {
+            let modif = new Date(data_count).getTime() - new Date().getTime();
+
+            let jour = Math.floor(modif / (1000 * 60 * 60 * 24));
+            let heure = Math.floor(modif % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
+            let minute = Math.floor(modif % (1000 * 60 * 60) / (1000 * 60));
+            let seconde = Math.floor(modif % (1000 * 60) / (1000));
+
+            container.innerHTML = replacement.replace('%J', jour.toString()).replace('%H', heure.toString()).replace('%M', minute.toString()).replace('%S', seconde.toString());
+        };
+
+        counter();
+        setInterval(counter, 1000);
+
+    }, false);
+
+</script>
+
+</body>
+</html>
